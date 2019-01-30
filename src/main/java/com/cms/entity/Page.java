@@ -4,11 +4,7 @@ import com.cms.util.Const;
 import com.cms.util.PageData;
 import com.cms.util.Tools;
 
-/**
- * 分页类
- * @author FH QQ 313596790[青苔]
- * 修改时间：2018年8月8日
- */
+
 public class Page {
 	
 	private int showCount; 				//每页显示记录数

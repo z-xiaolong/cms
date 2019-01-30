@@ -13,10 +13,14 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.cms.util.Const;
 @Controller
 @RequestMapping
 public class SecurityCode {
@@ -25,12 +29,17 @@ public class SecurityCode {
     public void generate(HttpServletResponse response){
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         String code = drawImg(output);
+
+        Subject currentUser = SecurityUtils.getSubject();
+        Session session = currentUser.getSession();
+        session.setAttribute(Const.SESSION_SECURITY_CODE, code);
+
         try {
             ServletOutputStream out = response.getOutputStream();
             output.writeTo(out);
             out.close();
         } catch (IOException e) {
-            //e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
